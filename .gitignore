@@ -1,0 +1,11 @@
+# fichiers générés automatiquement par Python
+__pycache__/
+*.pyc
+
+# environnements Python locaux
+.venv/
+venv/
+
+# fichiers système Windows
+Thumbs.db
+desktop.ini

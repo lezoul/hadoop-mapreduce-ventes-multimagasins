@@ -1,0 +1,24 @@
+PS C:\Users\Admin> docker exec -it hadoop-master bash
+root@hadoop-master:~# mkdir -p /projet/resultats
+root@hadoop-master:~# for job in detail mois magasin categorie produit
+do
+  hdfs dfs -get /projet_ventes/sorties/ca_${job}/r1 /projet/resultats/ca_${job}
+done
+root@hadoop-master:~# ls -R /projet/resultats
+/projet/resultats:
+ca_categorie  ca_detail  ca_magasin  ca_mois  ca_produit
+
+/projet/resultats/ca_categorie:
+_SUCCESS  part-00000
+
+/projet/resultats/ca_detail:
+_SUCCESS  part-00000
+
+/projet/resultats/ca_magasin:
+_SUCCESS  part-00000
+
+/projet/resultats/ca_mois:
+_SUCCESS  part-00000
+
+/projet/resultats/ca_produit:
+_SUCCESS  part-00000

@@ -1,0 +1,7 @@
+# scripts exécutés sous Linux : toujours des fins de ligne Unix (LF)
+*.py text eol=lf
+*.sh text eol=lf
+*.toml text eol=lf
+
+# le CSV source ne doit jamais être modifié par Git (md5 identique)
+*.csv -text

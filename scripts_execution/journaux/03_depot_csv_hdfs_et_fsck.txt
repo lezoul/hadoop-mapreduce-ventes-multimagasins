@@ -1,0 +1,151 @@
+Windows PowerShell 5.1
+Copyright (C) Microsoft Corporation. Tous droits réservés.
+
+PS C:\Users\Admin> docker start hadoop-worker1 hadoop-worker2 hadoop-master
+hadoop-worker1
+hadoop-worker2
+hadoop-master
+PS C:\Users\Admin> docker exec -it hadoop-master bash
+root@hadoop-master:~# start-dfs.sh
+start-yarn.sh
+mapred --daemon start historyserver
+jps
+Starting namenodes on [hadoop-master]
+hadoop-master: Warning: Permanently added 'hadoop-master' (ED25519) to the list of known hosts.
+hadoop-master: WARNING: HADOOP_NAMENODE_OPTS has been replaced by HDFS_NAMENODE_OPTS. Using value of HADOOP_NAMENODE_OPTS.
+Starting datanodes
+WARNING: HADOOP_SECURE_DN_LOG_DIR has been replaced by HADOOP_SECURE_LOG_DIR. Using value of HADOOP_SECURE_DN_LOG_DIR.
+hadoop-worker2: Warning: Permanently added 'hadoop-worker2' (ED25519) to the list of known hosts.
+hadoop-worker1: Warning: Permanently added 'hadoop-worker1' (ED25519) to the list of known hosts.
+hadoop-worker2: WARNING: HADOOP_SECURE_DN_LOG_DIR has been replaced by HADOOP_SECURE_LOG_DIR. Using value of HADOOP_SECURE_DN_LOG_DIR.
+hadoop-worker2: WARNING: HADOOP_DATANODE_OPTS has been replaced by HDFS_DATANODE_OPTS. Using value of HADOOP_DATANODE_OPTS.
+hadoop-worker1: WARNING: HADOOP_SECURE_DN_LOG_DIR has been replaced by HADOOP_SECURE_LOG_DIR. Using value of HADOOP_SECURE_DN_LOG_DIR.
+hadoop-worker1: WARNING: HADOOP_DATANODE_OPTS has been replaced by HDFS_DATANODE_OPTS. Using value of HADOOP_DATANODE_OPTS.
+Starting secondary namenodes [hadoop-master]
+hadoop-master: Warning: Permanently added 'hadoop-master' (ED25519) to the list of known hosts.
+hadoop-master: WARNING: HADOOP_SECONDARYNAMENODE_OPTS has been replaced by HDFS_SECONDARYNAMENODE_OPTS. Using value of HADOOP_SECONDARYNAMENODE_OPTS.
+WARNING: YARN_CONF_DIR has been replaced by HADOOP_CONF_DIR. Using value of YARN_CONF_DIR.
+Starting resourcemanager
+Starting nodemanagers
+hadoop-worker1: Warning: Permanently added 'hadoop-worker1' (ED25519) to the list of known hosts.
+hadoop-worker2: Warning: Permanently added 'hadoop-worker2' (ED25519) to the list of known hosts.
+768 Jps
+163 NameNode
+596 ResourceManager
+361 SecondaryNameNode
+746 JobHistoryServer
+root@hadoop-master:~# ls -l /projet/donnees
+md5sum /projet/donnees/ventes_multimagasin_2025.csv
+wc -l /projet/donnees/ventes_multimagasin_2025.csv
+hdfs dfs -mkdir -p /projet_ventes/entree /projet_ventes/entree_blocs_1m /projet_ventes/tests /projet_ventes/sorties
+hdfs dfs -put /projet/donnees/ventes_multimagasin_2025.csv /projet_ventes/entree/
+hdfs dfs -D dfs.blocksize=1048576 -put /projet/donnees/ventes_multimagasin_2025.csv /projet_ventes/entree_blocs_1m/
+hdfs dfs -ls -R /projet_ventes
+hdfs dfs -cat /projet_ventes/entree/ventes_multimagasin_2025.csv | wc -l
+hdfs dfs -cat /projet_ventes/entree/ventes_multimagasin_2025.csv | md5sum
+hdfs fsck /projet_ventes/entree/ventes_multimagasin_2025.csv -files -blocks -locations
+hdfs fsck /projet_ventes/entree_blocs_1m/ventes_multimagasin_2025.csv -files -blocks -locations
+total 1940
+-rwxrwxrwx 1 root root 1985795 Nov  2 02:14 ventes_multimagasin_2025.csv
+4ae57ed472eb5c10dd07814deba2c37b  /projet/donnees/ventes_multimagasin_2025.csv
+24001 /projet/donnees/ventes_multimagasin_2025.csv
+drwxr-xr-x   - root supergroup          0 2026-11-02 03:02 /projet_ventes/entree
+-rw-r--r--   2 root supergroup    1985795 2026-11-02 03:02 /projet_ventes/entree/ventes_multimagasin_2025.csv
+drwxr-xr-x   - root supergroup          0 2026-11-02 03:02 /projet_ventes/entree_blocs_1m
+-rw-r--r--   2 root supergroup    1985795 2026-11-02 03:02 /projet_ventes/entree_blocs_1m/ventes_multimagasin_2025.csv
+drwxr-xr-x   - root supergroup          0 2026-11-02 03:02 /projet_ventes/sorties
+drwxr-xr-x   - root supergroup          0 2026-11-02 03:02 /projet_ventes/tests
+24001
+4ae57ed472eb5c10dd07814deba2c37b  -
+Connecting to namenode via http://hadoop-master:9870/fsck?ugi=root&files=1&blocks=1&locations=1&path=%2Fprojet_ventes%2Fentree%2Fventes_multimagasin_2025.csv
+FSCK started by root (auth:SIMPLE) from /172.18.0.4 for path /projet_ventes/entree/ventes_multimagasin_2025.csv at Mon Nov 02 03:02:52 GMT 2026
+
+/projet_ventes/entree/ventes_multimagasin_2025.csv 1985795 bytes, replicated: replication=2, 1 block(s):  OK
+0. BP-1931828922-172.18.0.4-1793587470485:blk_1073741825_1001 len=1985795 Live_repl=2  [DatanodeInfoWithStorage[172.18.0.2:9866,DS-ad58f284-ac74-4435-a3a3-890b4dfb3358,DISK], DatanodeInfoWithStorage[172.18.0.3:9866,DS-601b59a1-8ec5-4a40-baac-126cc1403ae5,DISK]]
+
+
+Status: HEALTHY
+ Number of data-nodes:  2
+ Number of racks:               1
+ Total dirs:                    0
+ Total symlinks:                0
+
+Replicated Blocks:
+ Total size:    1985795 B
+ Total files:   1
+ Total blocks (validated):      1 (avg. block size 1985795 B)
+ Minimally replicated blocks:   1 (100.0 %)
+ Over-replicated blocks:        0 (0.0 %)
+ Under-replicated blocks:       0 (0.0 %)
+ Mis-replicated blocks:         0 (0.0 %)
+ Default replication factor:    2
+ Average block replication:     2.0
+ Missing blocks:                0
+ Corrupt blocks:                0
+ Missing replicas:              0 (0.0 %)
+ Blocks queued for replication: 0
+
+Erasure Coded Block Groups:
+ Total size:    0 B
+ Total files:   0
+ Total block groups (validated):        0
+ Minimally erasure-coded block groups:  0
+ Over-erasure-coded block groups:       0
+ Under-erasure-coded block groups:      0
+ Unsatisfactory placement block groups: 0
+ Average block group size:      0.0
+ Missing block groups:          0
+ Corrupt block groups:          0
+ Missing internal blocks:       0
+ Blocks queued for replication: 0
+FSCK ended at Mon Nov 02 03:02:52 GMT 2026 in 26 milliseconds
+
+
+The filesystem under path '/projet_ventes/entree/ventes_multimagasin_2025.csv' is HEALTHY
+Connecting to namenode via http://hadoop-master:9870/fsck?ugi=root&files=1&blocks=1&locations=1&path=%2Fprojet_ventes%2Fentree_blocs_1m%2Fventes_multimagasin_2025.csv
+FSCK started by root (auth:SIMPLE) from /172.18.0.4 for path /projet_ventes/entree_blocs_1m/ventes_multimagasin_2025.csv at Mon Nov 02 03:02:56 GMT 2026
+
+/projet_ventes/entree_blocs_1m/ventes_multimagasin_2025.csv 1985795 bytes, replicated: replication=2, 2 block(s):  OK
+0. BP-1931828922-172.18.0.4-1793587470485:blk_1073741826_1002 len=1048576 Live_repl=2  [DatanodeInfoWithStorage[172.18.0.2:9866,DS-ad58f284-ac74-4435-a3a3-890b4dfb3358,DISK], DatanodeInfoWithStorage[172.18.0.3:9866,DS-601b59a1-8ec5-4a40-baac-126cc1403ae5,DISK]]
+1. BP-1931828922-172.18.0.4-1793587470485:blk_1073741827_1003 len=937219 Live_repl=2  [DatanodeInfoWithStorage[172.18.0.2:9866,DS-ad58f284-ac74-4435-a3a3-890b4dfb3358,DISK], DatanodeInfoWithStorage[172.18.0.3:9866,DS-601b59a1-8ec5-4a40-baac-126cc1403ae5,DISK]]
+
+
+Status: HEALTHY
+ Number of data-nodes:  2
+ Number of racks:               1
+ Total dirs:                    0
+ Total symlinks:                0
+
+Replicated Blocks:
+ Total size:    1985795 B
+ Total files:   1
+ Total blocks (validated):      2 (avg. block size 992897 B)
+ Minimally replicated blocks:   2 (100.0 %)
+ Over-replicated blocks:        0 (0.0 %)
+ Under-replicated blocks:       0 (0.0 %)
+ Mis-replicated blocks:         0 (0.0 %)
+ Default replication factor:    2
+ Average block replication:     2.0
+ Missing blocks:                0
+ Corrupt blocks:                0
+ Missing replicas:              0 (0.0 %)
+ Blocks queued for replication: 0
+
+Erasure Coded Block Groups:
+ Total size:    0 B
+ Total files:   0
+ Total block groups (validated):        0
+ Minimally erasure-coded block groups:  0
+ Over-erasure-coded block groups:       0
+ Under-erasure-coded block groups:      0
+ Unsatisfactory placement block groups: 0
+ Average block group size:      0.0
+ Missing block groups:          0
+ Corrupt block groups:          0
+ Missing internal blocks:       0
+ Blocks queued for replication: 0
+FSCK ended at Mon Nov 02 03:02:56 GMT 2026 in 5 milliseconds
+
+
+The filesystem under path '/projet_ventes/entree_blocs_1m/ventes_multimagasin_2025.csv' is HEALTHY
+root@hadoop-master:~#

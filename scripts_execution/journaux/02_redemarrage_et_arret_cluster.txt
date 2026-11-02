@@ -1,0 +1,126 @@
+Windows PowerShell 5.1
+Copyright (C) Microsoft Corporation. Tous droits réservés.
+
+PS C:\Users\Admin>    docker exec hadoop-worker2 jps
+183 NodeManager
+71 DataNode
+287 Jps
+PS C:\Users\Admin>    docker exec hadoop-worker2 python3 --version
+Python 3.10.12
+PS C:\Users\Admin>    docker start hadoop-worker1 hadoop-worker2 hadoop-master
+hadoop-worker1
+hadoop-worker2
+hadoop-master
+PS C:\Users\Admin>    docker exec -it hadoop-master bash
+root@hadoop-master:~#    start-dfs.sh
+   start-yarn.sh
+   mapred --daemon start historyserver
+Starting namenodes on [hadoop-master]
+hadoop-master: Warning: Permanently added 'hadoop-master' (ED25519) to the list of known hosts.
+hadoop-master: WARNING: HADOOP_NAMENODE_OPTS has been replaced by HDFS_NAMENODE_OPTS. Using value of HADOOP_NAMENODE_OPTS.
+hadoop-master: namenode is running as process 220.  Stop it first and ensure /tmp/hadoop-root-namenode.pid file is empty before retry.
+Starting datanodes
+WARNING: HADOOP_SECURE_DN_LOG_DIR has been replaced by HADOOP_SECURE_LOG_DIR. Using value of HADOOP_SECURE_DN_LOG_DIR.
+hadoop-worker2: Warning: Permanently added 'hadoop-worker2' (ED25519) to the list of known hosts.
+hadoop-worker1: Warning: Permanently added 'hadoop-worker1' (ED25519) to the list of known hosts.
+hadoop-worker1: WARNING: HADOOP_SECURE_DN_LOG_DIR has been replaced by HADOOP_SECURE_LOG_DIR. Using value of HADOOP_SECURE_DN_LOG_DIR.
+hadoop-worker1: WARNING: HADOOP_DATANODE_OPTS has been replaced by HDFS_DATANODE_OPTS. Using value of HADOOP_DATANODE_OPTS.
+hadoop-worker2: WARNING: HADOOP_SECURE_DN_LOG_DIR has been replaced by HADOOP_SECURE_LOG_DIR. Using value of HADOOP_SECURE_DN_LOG_DIR.
+hadoop-worker2: WARNING: HADOOP_DATANODE_OPTS has been replaced by HDFS_DATANODE_OPTS. Using value of HADOOP_DATANODE_OPTS.
+hadoop-worker1: datanode is running as process 70.  Stop it first and ensure /tmp/hadoop-root-datanode.pid file is empty before retry.
+hadoop-worker2: datanode is running as process 71.  Stop it first and ensure /tmp/hadoop-root-datanode.pid file is empty before retry.
+Starting secondary namenodes [hadoop-master]
+hadoop-master: Warning: Permanently added 'hadoop-master' (ED25519) to the list of known hosts.
+hadoop-master: WARNING: HADOOP_SECONDARYNAMENODE_OPTS has been replaced by HDFS_SECONDARYNAMENODE_OPTS. Using value of HADOOP_SECONDARYNAMENODE_OPTS.
+hadoop-master: secondarynamenode is running as process 404.  Stop it first and ensure /tmp/hadoop-root-secondarynamenode.pid file is empty before retry.
+WARNING: YARN_CONF_DIR has been replaced by HADOOP_CONF_DIR. Using value of YARN_CONF_DIR.
+Starting resourcemanager
+resourcemanager is running as process 649.  Stop it first and ensure /tmp/hadoop-root-resourcemanager.pid file is empty before retry.
+Starting nodemanagers
+hadoop-worker1: Warning: Permanently added 'hadoop-worker1' (ED25519) to the list of known hosts.
+hadoop-worker2: Warning: Permanently added 'hadoop-worker2' (ED25519) to the list of known hosts.
+hadoop-worker1: nodemanager is running as process 182.  Stop it first and ensure /tmp/hadoop-root-nodemanager.pid file is empty before retry.
+hadoop-worker2: nodemanager is running as process 183.  Stop it first and ensure /tmp/hadoop-root-nodemanager.pid file is empty before retry.
+historyserver is running as process 783.  Stop it first and ensure /tmp/hadoop-root-historyserver.pid file is empty before retry.
+root@hadoop-master:~# New-Item -ItemType Directory "C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\donnees"
+bash: New-Item: command not found
+root@hadoop-master:~# New-Item -ItemType Directory "C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\donnees"
+bash: New-Item: command not found
+root@hadoop-master:~# New-Item -ItemType Directory "C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\donnees\ventes_multimagasin_2025.csv"
+bash: New-Item: command not found
+root@hadoop-master:~# start-dfs.sh
+start-yarn.sh
+mapred --daemon start historyserver
+jps
+Starting namenodes on [hadoop-master]
+hadoop-master: Warning: Permanently added 'hadoop-master' (ED25519) to the list of known hosts.
+hadoop-master: WARNING: HADOOP_NAMENODE_OPTS has been replaced by HDFS_NAMENODE_OPTS. Using value of HADOOP_NAMENODE_OPTS.
+hadoop-master: namenode is running as process 220.  Stop it first and ensure /tmp/hadoop-root-namenode.pid file is empty before retry.
+Starting datanodes
+WARNING: HADOOP_SECURE_DN_LOG_DIR has been replaced by HADOOP_SECURE_LOG_DIR. Using value of HADOOP_SECURE_DN_LOG_DIR.
+hadoop-worker1: Warning: Permanently added 'hadoop-worker1' (ED25519) to the list of known hosts.
+hadoop-worker2: Warning: Permanently added 'hadoop-worker2' (ED25519) to the list of known hosts.
+hadoop-worker1: WARNING: HADOOP_SECURE_DN_LOG_DIR has been replaced by HADOOP_SECURE_LOG_DIR. Using value of HADOOP_SECURE_DN_LOG_DIR.
+hadoop-worker1: WARNING: HADOOP_DATANODE_OPTS has been replaced by HDFS_DATANODE_OPTS. Using value of HADOOP_DATANODE_OPTS.
+hadoop-worker2: WARNING: HADOOP_SECURE_DN_LOG_DIR has been replaced by HADOOP_SECURE_LOG_DIR. Using value of HADOOP_SECURE_DN_LOG_DIR.
+hadoop-worker2: WARNING: HADOOP_DATANODE_OPTS has been replaced by HDFS_DATANODE_OPTS. Using value of HADOOP_DATANODE_OPTS.
+hadoop-worker1: datanode is running as process 70.  Stop it first and ensure /tmp/hadoop-root-datanode.pid file is empty before retry.
+hadoop-worker2: datanode is running as process 71.  Stop it first and ensure /tmp/hadoop-root-datanode.pid file is empty before retry.
+Starting secondary namenodes [hadoop-master]
+hadoop-master: Warning: Permanently added 'hadoop-master' (ED25519) to the list of known hosts.
+hadoop-master: WARNING: HADOOP_SECONDARYNAMENODE_OPTS has been replaced by HDFS_SECONDARYNAMENODE_OPTS. Using value of HADOOP_SECONDARYNAMENODE_OPTS.
+hadoop-master: secondarynamenode is running as process 404.  Stop it first and ensure /tmp/hadoop-root-secondarynamenode.pid file is empty before retry.
+WARNING: YARN_CONF_DIR has been replaced by HADOOP_CONF_DIR. Using value of YARN_CONF_DIR.
+Starting resourcemanager
+resourcemanager is running as process 649.  Stop it first and ensure /tmp/hadoop-root-resourcemanager.pid file is empty before retry.
+Starting nodemanagers
+hadoop-worker1: Warning: Permanently added 'hadoop-worker1' (ED25519) to the list of known hosts.
+hadoop-worker2: Warning: Permanently added 'hadoop-worker2' (ED25519) to the list of known hosts.
+hadoop-worker2: nodemanager is running as process 183.  Stop it first and ensure /tmp/hadoop-root-nodemanager.pid file is empty before retry.
+hadoop-worker1: nodemanager is running as process 182.  Stop it first and ensure /tmp/hadoop-root-nodemanager.pid file is empty before retry.
+historyserver is running as process 783.  Stop it first and ensure /tmp/hadoop-root-historyserver.pid file is empty before retry.
+2355 Jps
+404 SecondaryNameNode
+649 ResourceManager
+220 NameNode
+783 JobHistoryServer
+root@hadoop-master:~# exit
+exit
+
+What's next:
+    Try Docker Debug for seamless, persistent debugging tools in any container or image → docker debug hadoop-master
+    Learn more at https://docs.docker.com/go/debug-cli/
+PS C:\Users\Admin> docker exec -it hadoop-master bash
+root@hadoop-master:~# mapred --daemon stop historyserver
+stop-yarn.sh
+stop-dfs.sh
+exit
+WARNING: YARN_CONF_DIR has been replaced by HADOOP_CONF_DIR. Using value of YARN_CONF_DIR.
+Stopping nodemanagers
+hadoop-worker2: Warning: Permanently added 'hadoop-worker2' (ED25519) to the list of known hosts.
+hadoop-worker1: Warning: Permanently added 'hadoop-worker1' (ED25519) to the list of known hosts.
+Stopping resourcemanager
+Stopping namenodes on [hadoop-master]
+hadoop-master: Warning: Permanently added 'hadoop-master' (ED25519) to the list of known hosts.
+hadoop-master: WARNING: HADOOP_NAMENODE_OPTS has been replaced by HDFS_NAMENODE_OPTS. Using value of HADOOP_NAMENODE_OPTS.
+Stopping datanodes
+WARNING: HADOOP_SECURE_DN_LOG_DIR has been replaced by HADOOP_SECURE_LOG_DIR. Using value of HADOOP_SECURE_DN_LOG_DIR.
+hadoop-worker1: Warning: Permanently added 'hadoop-worker1' (ED25519) to the list of known hosts.
+hadoop-worker2: Warning: Permanently added 'hadoop-worker2' (ED25519) to the list of known hosts.
+hadoop-worker1: WARNING: HADOOP_SECURE_DN_LOG_DIR has been replaced by HADOOP_SECURE_LOG_DIR. Using value of HADOOP_SECURE_DN_LOG_DIR.
+hadoop-worker1: WARNING: HADOOP_DATANODE_OPTS has been replaced by HDFS_DATANODE_OPTS. Using value of HADOOP_DATANODE_OPTS.
+hadoop-worker2: WARNING: HADOOP_SECURE_DN_LOG_DIR has been replaced by HADOOP_SECURE_LOG_DIR. Using value of HADOOP_SECURE_DN_LOG_DIR.
+hadoop-worker2: WARNING: HADOOP_DATANODE_OPTS has been replaced by HDFS_DATANODE_OPTS. Using value of HADOOP_DATANODE_OPTS.
+Stopping secondary namenodes [hadoop-master]
+hadoop-master: Warning: Permanently added 'hadoop-master' (ED25519) to the list of known hosts.
+hadoop-master: WARNING: HADOOP_SECONDARYNAMENODE_OPTS has been replaced by HDFS_SECONDARYNAMENODE_OPTS. Using value of HADOOP_SECONDARYNAMENODE_OPTS.
+exit
+
+What's next:
+    Try Docker Debug for seamless, persistent debugging tools in any container or image → docker debug hadoop-master
+    Learn more at https://docs.docker.com/go/debug-cli/
+PS C:\Users\Admin> docker stop hadoop-master hadoop-worker1 hadoop-worker2
+hadoop-master
+hadoop-worker1
+hadoop-worker2
+PS C:\Users\Admin>

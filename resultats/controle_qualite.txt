@@ -1,0 +1,45 @@
+
+== 1. Structure
+En-tête conforme au dictionnaire : True
+Lignes de données : 24000
+Lignes qui n'ont pas 12 colonnes : 0
+
+== 2. Valeurs manquantes par colonne
+id_vente           0
+date_vente         0
+id_magasin         0
+ville              0
+id_produit         0
+nom_produit        0
+categorie          0
+quantite           0
+prix_unitaire_cad  0
+remise_pct         0
+statut             0
+mode_paiement      0
+
+== 3. Doublons
+id_vente en double : 0
+Lignes entières en double : 0
+Lignes identiques hors id_vente : 334
+
+== 4. Dates
+Dates invalides : 0
+Période : 2025-01-01 au 2025-12-31
+
+== 5. Cohérence magasins et produits
+Magasins : 8 | villes : 6
+Magasins avec plus d'une ville : 0
+Produits : 20 | catégories : ['Bureau', 'Electronique', 'Maison', 'Sport']
+Produits avec plusieurs noms, catégories ou prix : 0
+
+== 6. Valeurs numériques et codes
+quantite : de 1 à 5 | invalides : 0
+prix_unitaire_cad : de 6.50 à 219.00 | invalides : 0
+remise_pct hors {0, 5, 10, 15, 20} : 0
+statut hors {VALIDEE, ANNULEE} : 0
+
+== 7. Répartitions
+statut : {'ANNULEE': 1424, 'VALIDEE': 22576}
+mode_paiement : {'CARTE': 17246, 'ESPECES': 5304, 'VIREMENT': 1450}
+id_magasin : {'M01': 3362, 'M02': 2359, 'M03': 3081, 'M04': 2599, 'M05': 4646, 'M06': 2850, 'M07': 2445, 'M08': 2658}

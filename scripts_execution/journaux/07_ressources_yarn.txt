@@ -1,0 +1,49 @@
+root@hadoop-master:~# yarn node -list -showDetails
+WARNING: YARN_CONF_DIR has been replaced by HADOOP_CONF_DIR. Using value of YARN_CONF_DIR.
+2026-11-02 20:10:59,439 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at hadoop-master/172.18.0.4:8032
+2026-11-02 20:10:59,965 INFO conf.Configuration: resource-types.xml not found
+2026-11-02 20:10:59,966 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+Total Nodes:2
+         Node-Id             Node-State Node-Http-Address       Number-of-Running-Containers
+hadoop-worker2:38681            RUNNING hadoop-worker2:8042                                0
+Detailed Node Information :
+        Configured Resources : <memory:8192, vCores:8>
+        Allocated Resources : <memory:0, vCores:0>
+        Resource Utilization by Node : PMem:4734 MB, VMem:4734 MB, VCores:0.19320454
+        Resource Utilization by Containers : PMem:0 MB, VMem:0 MB, VCores:0.0
+        Node-Labels :
+hadoop-worker1:37733            RUNNING hadoop-worker1:8042                                0
+Detailed Node Information :
+        Configured Resources : <memory:8192, vCores:8>
+        Allocated Resources : <memory:0, vCores:0>
+        Resource Utilization by Node : PMem:4732 MB, VMem:4732 MB, VCores:0.123128116
+        Resource Utilization by Containers : PMem:0 MB, VMem:0 MB, VCores:0.0
+        Node-Labels :
+root@hadoop-master:~# yarn application -status application_1793588531268_0010
+WARNING: YARN_CONF_DIR has been replaced by HADOOP_CONF_DIR. Using value of YARN_CONF_DIR.
+2026-11-02 20:11:12,264 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at hadoop-master/172.18.0.4:8032
+2026-11-02 20:11:12,935 INFO conf.Configuration: resource-types.xml not found
+2026-11-02 20:11:12,936 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+Application Report :
+        Application-Id : application_1793588531268_0010
+        Application-Name : exp_maps4
+        Application-Type : MAPREDUCE
+        User : root
+        Queue : default
+        Application Priority : 0
+        Start-Time : 1793649886297
+        Finish-Time : 1793649914735
+        Progress : 100%
+        State : FINISHED
+        Final-State : SUCCEEDED
+        Tracking-URL : http://hadoop-worker2:19888/jobhistory/job/job_1793588531268_0010
+        RPC Port : 43191
+        AM Host : hadoop-worker2
+        Aggregate Resource Allocation : 130124 MB-seconds, 90 vcore-seconds
+        Aggregate Resource Preempted : 0 MB-seconds, 0 vcore-seconds
+        Log Aggregation Status : DISABLED
+        Diagnostics :
+        Unmanaged Application : false
+        Application Node Label Expression : <Not set>
+        AM container Node Label Expression : <DEFAULT_PARTITION>
+        TimeoutType : LIFETIME  ExpiryTime : UNLIMITED  RemainingTime : -1seconds
