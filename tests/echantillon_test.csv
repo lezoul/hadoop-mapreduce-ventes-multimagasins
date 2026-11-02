@@ -1,0 +1,8 @@
+id_vente,date_vente,id_magasin,ville,id_produit,nom_produit,categorie,quantite,prix_unitaire_cad,remise_pct,statut,mode_paiement
+T01,2025-01-10,M01,Ottawa,P004,Ecran 24 pouces,Electronique,1,219.00,0,VALIDEE,CARTE
+T02,2025-01-15,M01,Ottawa,P007,Lot de stylos,Bureau,1,8.90,15,VALIDEE,ESPECES
+T03,2025-01-20,M01,Ottawa,P007,Lot de stylos,Bureau,2,8.90,15,VALIDEE,CARTE
+T04,2025-02-05,M05,Toronto,P004,Ecran 24 pouces,Electronique,3,219.00,20,VALIDEE,CARTE
+T05,2025-02-07,M05,Toronto,P004,Ecran 24 pouces,Electronique,1,219.00,0,ANNULEE,CARTE
+T06,2025-02-09,M05,Toronto,P019,Halteres,Sport,2,45.00,10,VALIDEE
+T07,2025-03-12,M03,Montréal,P006,Cahier A5,Bureau,1,6.50,5,VALIDEE,VIREMENT

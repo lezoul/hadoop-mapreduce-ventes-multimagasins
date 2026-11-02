@@ -1,0 +1,4 @@
+2025-01|M01|Ottawa|Bureau|P007|Lot de stylos	2270
+2025-01|M01|Ottawa|Electronique|P004|Ecran 24 pouces	21900
+2025-02|M05|Toronto|Electronique|P004|Ecran 24 pouces	52560
+2025-03|M03|Montréal|Bureau|P006|Cahier A5	618
