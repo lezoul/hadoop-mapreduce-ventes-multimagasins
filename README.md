@@ -6,8 +6,8 @@ Projet d'équipe (UA2) du cours *Bases de données massives avancées* (IFM30522
 
 | | |
 | --- | --- |
-| Dépôt | https://github.com/lezoul/hadoop-mapreduce-ventes-multimagasins |
-| Image Docker | `docker.io/yacinelezoul/dashboard-ventes:1.0` (https://hub.docker.com/r/yacinelezoul/dashboard-ventes) |
+| Dépôt | [https://github.com/lezoul/hadoop-mapreduce-ventes-multimagasins](https://github.com/lezoul/hadoop-mapreduce-ventes-multimagasins) |
+| Image Docker | `docker.io/yacinelezoul/dashboard-ventes:1.0` ([page Docker Hub](https://hub.docker.com/r/yacinelezoul/dashboard-ventes)) |
 | Données | `donnees/ventes_multimagasin_2025.csv` : 24 000 ventes de 2025, 8 magasins, 6 villes, 20 produits |
 | Résultat de contrôle | CA net 2025 = **1 946 613,14 $** (194 661 314 cents), identique dans tous les jobs et toutes les configurations |
 
