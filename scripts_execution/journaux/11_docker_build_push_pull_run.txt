@@ -1,0 +1,129 @@
+PS C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet> cd "C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\application_python"
+PS C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\application_python> docker build -t yacinelezoul/dashboard-ventes:1.0 .
+[+] Building 172.2s (12/12) FINISHED                   docker:desktop-linux
+ => [internal] load build definition from Dockerfile                   0.3s
+ => => transferring dockerfile: 811B                                   0.1s
+ => [internal] load metadata for docker.io/library/python:3.14-slim    6.6s
+ => [auth] library/python:pull token for registry-1.docker.io          0.0s
+ => [internal] load .dockerignore                                      0.1s
+ => => transferring context: 84B                                       0.0s
+ => [1/6] FROM docker.io/library/python:3.14-slim@sha256:930e1abba7c  21.9s
+ => => resolve docker.io/library/python:3.14-slim@sha256:930e1abba7c4  0.1s
+ => => sha256:40a79f5805ed632260bcefb9f20f1db1f62ba605ded 250B / 250B  0.1s
+ => => sha256:57257d6d8137dab325b25390b3711f8dd1a2 12.41MB / 12.41MB  10.0s
+ => => sha256:646d37df0c533921d82512bef9ce6a5d2948e4e 1.29MB / 1.29MB  2.8s
+ => => sha256:6fc242d221a673263eabd14a9ad9584d3177 29.86MB / 29.86MB  18.1s
+ => => extracting sha256:6fc242d221a673263eabd14a9ad9584d3177c96e5cb5  2.4s
+ => => extracting sha256:646d37df0c533921d82512bef9ce6a5d2948e4e98c8c  0.2s
+ => => extracting sha256:57257d6d8137dab325b25390b3711f8dd1a2a3a45fef  0.9s
+ => => extracting sha256:40a79f5805ed632260bcefb9f20f1db1f62ba605ded5  0.0s
+ => [internal] load build context                                      0.1s
+ => => transferring context: 17.75kB                                   0.0s
+ => [2/6] WORKDIR /app                                                 0.8s
+ => [3/6] COPY requirements.txt .                                      0.1s
+ => [4/6] RUN pip install --no-cache-dir -r requirements.txt         102.3s
+ => [5/6] COPY app.py lecture_resultats.py ./                          0.3s
+ => [6/6] COPY .streamlit/ ./.streamlit/                               0.1s
+ => exporting to image                                                39.4s
+ => => exporting layers                                               31.0s
+ => => exporting manifest sha256:7c8ddd54695c32c88e96fb81ddc3222485dc  0.1s
+ => => exporting config sha256:d99c53c51d408143a20c24874de7b7a7dd9615  0.1s
+ => => exporting attestation manifest sha256:5f6abacf920c6526ff80e48d  0.0s
+ => => exporting manifest list sha256:ff1046bca3048a8533b2f0b7eab0127  0.0s
+ => => naming to docker.io/yacinelezoul/dashboard-ventes:1.0           0.0s
+ => => unpacking to docker.io/yacinelezoul/dashboard-ventes:1.0        8.0s
+PS C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\application_python> docker run -d --name dashboard-ventes -p 8501:8501 `
+>>   -v "C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\resultats:/app/resultats:ro" `
+>>   yacinelezoul/dashboard-ventes:1.0
+cc04775cda26bd12ec9a532f72d5278bf232e01a77286233f0e9e2ce7a5d43e7
+PS C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\application_python> docker login -u yacinelezoul
+
+i Info → A Personal Access Token (PAT) can be used instead.
+         To create a PAT, visit https://app.docker.com/settings
+
+
+Password:
+
+Error response from daemon: Get "https://registry-1.docker.io/v2/": unauthorized: incorrect username or password
+PS C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\application_python> docker login -u yacinelezoul
+
+i Info → A Personal Access Token (PAT) can be used instead.
+         To create a PAT, visit https://app.docker.com/settings
+
+
+Password:
+
+Login Succeeded
+PS C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\application_python> docker images yacinelezoul/dashboard-ventes
+                                                        i Info →   U  In Use
+IMAGE                       ID             DISK USAGE   CONTENT SIZE   EXTRA
+yacinelezoul/dashboard-ventes:1.0
+                            ff1046bca304        899MB          199MB    U
+PS C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\application_python>   cd "C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\application_python"
+PS C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\application_python>   docker build -t yacinelezoul/dashboard-ventes:1.0 .
+[+] Building 1.4s (12/12) FINISHED                     docker:desktop-linux
+ => [internal] load build definition from Dockerfile                   0.0s
+ => => transferring dockerfile: 811B                                   0.0s
+ => [internal] load metadata for docker.io/library/python:3.14-slim    0.8s
+ => [auth] library/python:pull token for registry-1.docker.io          0.0s
+ => [internal] load .dockerignore                                      0.0s
+ => => transferring context: 84B                                       0.0s
+ => [1/6] FROM docker.io/library/python:3.14-slim@sha256:930e1abba7c4  0.1s
+ => => resolve docker.io/library/python:3.14-slim@sha256:930e1abba7c4  0.1s
+ => [internal] load build context                                      0.0s
+ => => transferring context: 175B                                      0.0s
+ => CACHED [2/6] WORKDIR /app                                          0.0s
+ => CACHED [3/6] COPY requirements.txt .                               0.0s
+ => CACHED [4/6] RUN pip install --no-cache-dir -r requirements.txt    0.0s
+ => CACHED [5/6] COPY app.py lecture_resultats.py ./                   0.0s
+ => CACHED [6/6] COPY .streamlit/ ./.streamlit/                        0.0s
+ => exporting to image                                                 0.2s
+ => => exporting layers                                                0.0s
+ => => exporting manifest sha256:7c8ddd54695c32c88e96fb81ddc3222485dc  0.0s
+ => => exporting config sha256:d99c53c51d408143a20c24874de7b7a7dd9615  0.0s
+ => => exporting attestation manifest sha256:d279ceb57c046f4df84d9ee0  0.0s
+ => => exporting manifest list sha256:412f047f4e70fa6342ab9c4e4984243  0.0s
+ => => naming to docker.io/yacinelezoul/dashboard-ventes:1.0           0.0s
+ => => unpacking to docker.io/yacinelezoul/dashboard-ventes:1.0        0.0s
+PS C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\application_python> docker push yacinelezoul/dashboard-ventes:1.0
+The push refers to repository [docker.io/yacinelezoul/dashboard-ventes]
+34209725b456: Pushed
+44136fa355b3: Mounted from yacinelezoul/les_explorateurs_du_data
+646d37df0c53: Pushed
+6fc242d221a6: Pushed
+57257d6d8137: Pushed
+901256e72699: Pushed
+40a79f5805ed: Pushed
+c13abed04b95: Pushed
+d10ca936f3fa: Pushed
+1641b29e6227: Pushed
+4a9d7c5770aa: Pushed
+1.0: digest: sha256:412f047f4e70fa6342ab9c4e49842433291867713d7ebb8f4c8463065971caa7 size: 856
+PS C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\application_python> docker rm -f dashboard-ventes
+dashboard-ventes
+PS C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\application_python> docker rmi yacinelezoul/dashboard-ventes:1.0
+Untagged: yacinelezoul/dashboard-ventes:1.0
+Deleted: sha256:412f047f4e70fa6342ab9c4e49842433291867713d7ebb8f4c8463065971caa7
+PS C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\application_python> docker pull yacinelezoul/dashboard-ventes:1.0
+1.0: Pulling from yacinelezoul/dashboard-ventes
+44136fa355b3: Already exists
+4a9d7c5770aa: Pull complete
+c13abed04b95: Pull complete
+d10ca936f3fa: Pull complete
+901256e72699: Pull complete
+1641b29e6227: Pull complete
+34209725b456: Download complete
+Digest: sha256:412f047f4e70fa6342ab9c4e49842433291867713d7ebb8f4c8463065971caa7
+Status: Downloaded newer image for yacinelezoul/dashboard-ventes:1.0
+docker.io/yacinelezoul/dashboard-ventes:1.0
+PS C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\application_python> docker run -d --name dashboard-ventes -p 8501:8501 `
+>>   -v "C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\resultats:/app/resultats:ro" `
+>>   yacinelezoul/dashboard-ventes:1.0
+95bb805013de44ac70e36498fc8de443ccb80c1de95a5f67754ab72347ac2b61
+PS C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\application_python> docker ps
+CONTAINER ID   IMAGE                               COMMAND                  CREATED         STATUS        PORTS                                                                                                                                       NAMES
+95bb805013de   yacinelezoul/dashboard-ventes:1.0   "streamlit run app.p…"   2 seconds ago   Up 1 second   0.0.0.0:8501->8501/tcp, [::]:8501->8501/tcp                                                                                                 dashboard-ventes
+9a17b817442a   ous1/hadoop-cluster:latest          "sh -c 'service ssh …"   20 hours ago    Up 19 hours   0.0.0.0:8088->8088/tcp, [::]:8088->8088/tcp, 0.0.0.0:9870->9870/tcp, [::]:9870->9870/tcp, 0.0.0.0:19888->19888/tcp, [::]:19888->19888/tcp   hadoop-master
+d8d5b1a462f8   ous1/hadoop-cluster:latest          "sh -c 'service ssh …"   20 hours ago    Up 19 hours   0.0.0.0:8041->8042/tcp, [::]:8041->8042/tcp                                                                                                 hadoop-worker2
+e9761d85d691   ous1/hadoop-cluster:latest          "sh -c 'service ssh …"   20 hours ago    Up 19 hours   0.0.0.0:8040->8042/tcp, [::]:8040->8042/tcp                                                                                                 hadoop-worker1
+PS C:\Users\Admin\Desktop\Cours S1\S3\BDD massives\UA2\Projet\application_python>
