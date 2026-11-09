@@ -47,7 +47,8 @@ Le cluster comporte 3 conteneurs sur le réseau Docker `reseau-hadoop`, créés 
 ```text
 .
 ├── README.md                     # ce fichier
-├── rapport.pdf                   # rapport (corps + annexes : guide de reproduction, code, preuves)
+├── rapport.pdf                   # rapport d'évaluation (10 pages, organisé selon la grille)
+├── rapport_detaille.pdf          # rapport complet : guide de reproduction, code commenté, preuves
 ├── presentation.pptx             # support de soutenance (12 diapositives)
 ├── preuve_docker.txt             # registre, image:tag, digest, sorties pull / run
 ├── donnees/
@@ -72,7 +73,9 @@ Le cluster comporte 3 conteneurs sur le réseau Docker `reseau-hadoop`, créés 
 │   ├── Dockerfile                # image python:3.14-slim
 │   ├── .dockerignore
 │   └── .streamlit/config.toml    # thème
-├── scripts_execution/journaux/   # sorties réelles de toutes les commandes (preuves)
+├── scripts_execution/
+│   ├── commandes_execution.md    # toutes les commandes du projet, commentées, dans l'ordre (étapes 0 à 10)
+│   └── journaux/                 # sorties réelles de toutes les commandes (preuves)
 └── captures/                     # captures HDFS, YARN, Docker et tableau de bord
 ```
 
@@ -101,7 +104,9 @@ L'image ne contient pas les données : les sorties MapReduce lui sont données p
 
 ## 4. Reproduire toute la chaîne
 
-Les commandes sont données pour un hôte **Ubuntu 22.04 (bash)**. Sous Windows, utiliser PowerShell : remplacer `\` en fin de ligne par `` ` `` et `$(pwd)` par `${PWD}`. Le guide détaillé, avec l'explication de chaque commande et les résultats attendus, est en annexe A du rapport.
+> Toutes les commandes du projet, commentées et dans l'ordre, sont aussi regroupées dans [`scripts_execution/commandes_execution.md`](scripts_execution/commandes_execution.md).
+
+Les commandes sont données pour un hôte **Ubuntu 22.04 (bash)**. Sous Windows, utiliser PowerShell : remplacer `\` en fin de ligne par `` ` `` et `$(pwd)` par `${PWD}`. Le guide détaillé, avec l'explication de chaque commande et les résultats attendus, est en annexe A du rapport détaillé (`rapport_detaille.pdf`).
 
 **Repère** : une invite `root@hadoop-master:~#` signifie que l'on est **dans** le conteneur maître (commandes `hdfs`, `yarn`, `mapred`, `python3`) ; sinon on est sur l'hôte (commandes `docker`, `git`).
 
