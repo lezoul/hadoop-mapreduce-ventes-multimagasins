@@ -101,8 +101,8 @@ with k4.container(border=True):
     st.metric("Meilleur magasin", par_magasin.index[0])
     st.caption(texte_md(dollars(par_magasin.iloc[0], 0)))
 
-onglet_analyses, onglet_tcd, onglet_prov = st.tabs(
-    ["Analyses", "Tableau croisé par mois", "Provenance et contrôles"])
+onglet_analyses, onglet_jobs, onglet_tcd, onglet_prov = st.tabs(
+    ["Analyses", "Résultats des jobs 2 à 5", "Tableau croisé par mois", "Provenance et contrôles"])
 
 # =====================================================================
 # 5. ONGLET « ANALYSES » : les 4 analyses obligatoires, filtrées
@@ -278,5 +278,48 @@ with onglet_prov:
         "- Arrondi au cent par vente (0,5 arrondi vers le haut), avant toute somme\n"
         "- Ventes ANNULEE exclues\n"
         "- Toutes les agrégations sont faites par MapReduce (Hadoop Streaming). L'application lit les "
-        "1 917 lignes de `ca_detail` et ne fait que filtrer et regrouper ces lignes déjà agrégées."
+        "1 917 lignes de `ca_detail` et ne fait que filtrer et regrouper ces lignes déjà agrégées ; "
+        "l'onglet « Résultats des jobs 2 à 5 » affiche les sorties des 4 jobs chaînés telles quelles."
     )
+
+
+# =====================================================================
+# 8. ONGLET « RÉSULTATS DES JOBS 2 À 5 » : les sorties agrégées, telles quelles
+# =====================================================================
+def tableau_job(job, colonnes, tri=None):
+    """Sortie d'un job agrégé, prête à afficher : morceaux de la clé, CA en $ et en cents."""
+    tableau = lire_job(job)
+    if tri == "ca":
+        tableau = tableau.sort_values("cents", ascending=False)
+    tableau = tableau.rename(columns=colonnes)
+    tableau["CA net"] = tableau["ca"].map(dollars)
+    tableau = tableau.rename(columns={"cents": "Valeur (cents)"})
+    return tableau[list(colonnes.values()) + ["CA net", "Valeur (cents)"]]
+
+
+with onglet_jobs:
+    st.caption("Sorties des jobs 2 à 5, chaînés sur ca_detail, affichées telles que MapReduce les a écrites "
+               "(fichiers part-*, année complète, sans filtre). Clé et valeur : clé<TAB>montant en cents.")
+    haut_g, haut_d = st.columns(2)
+    with haut_g:
+        st.subheader("Job 2 · ca_mois")
+        st.caption("Clé : mois · 12 lignes · resultats/ca_mois/part-00000")
+        mois = tableau_job("ca_mois", {"mois": "Mois"})
+        mois["Mois"] = mois["Mois"].str[5:7].map(NOMS_MOIS) + " 2025"
+        st.dataframe(mois, hide_index=True, width="stretch")
+    with haut_d:
+        st.subheader("Job 3 · ca_magasin")
+        st.caption("Clé : magasin|ville · 8 lignes · resultats/ca_magasin/part-00000")
+        st.dataframe(tableau_job("ca_magasin", {"magasin": "Magasin", "ville": "Ville"}, tri="ca"),
+                     hide_index=True, width="stretch")
+        st.subheader("Job 4 · ca_categorie")
+        st.caption("Clé : categorie · 4 lignes · resultats/ca_categorie/part-00000")
+        st.dataframe(tableau_job("ca_categorie", {"categorie": "Catégorie"}, tri="ca"),
+                     hide_index=True, width="stretch")
+    st.subheader("Job 5 · ca_produit")
+    st.caption("Clé : id_produit|nom_produit|categorie · 20 lignes · resultats/ca_produit/part-00000 · "
+               "les 5 premières lignes forment le Top 5")
+    produits = tableau_job("ca_produit", {"id_produit": "Produit", "nom_produit": "Nom", "categorie": "Catégorie"},
+                           tri="ca")
+    produits.insert(0, "Rang", range(1, len(produits) + 1))
+    st.dataframe(produits, hide_index=True, width="stretch")
