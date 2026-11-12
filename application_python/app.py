@@ -283,43 +283,88 @@ with onglet_prov:
     )
 
 
+
 # =====================================================================
-# 8. ONGLET « RÉSULTATS DES JOBS 2 À 5 » : les sorties agrégées, telles quelles
+# 8. ONGLET « RÉSULTATS DES JOBS 2 À 5 » : les sorties agrégées, telles que MapReduce les a écrites
 # =====================================================================
-def tableau_job(job, colonnes, tri=None):
-    """Sortie d'un job agrégé, prête à afficher : morceaux de la clé, CA en $ et en cents."""
+# Chaque job a effacé une partie de la clé : un filtre ne s'applique que si sa colonne existe encore.
+FILTRES_ACTIFS = {"Ville": bool(villes), "Magasin": bool(magasins), "Catégorie": bool(categories),
+                  "Période": mois_retenus != ORDRE_MOIS}
+HAUTEUR_LIGNE = 35          # hauteur d'une ligne de tableau (en pixels)
+
+
+def hauteur_bloc(nb_lignes):
+    """Hauteur commune des deux blocs d'une même rangée : leurs cadres restent alignés."""
+    return 300 + (nb_lignes + 1) * HAUTEUR_LIGNE
+
+
+def tableau_job(job):
+    """Sortie brute d'un job agrégé : morceaux de la clé + CA en cents et en dollars."""
     tableau = lire_job(job)
-    if tri == "ca":
+    if job == "ca_mois":
+        tableau["mois_affiche"] = tableau["mois"].str[5:7].map(NOMS_MOIS)
+        tableau = tableau[tableau["mois_affiche"].isin(mois_retenus)]
+    if job == "ca_magasin":
+        if villes:
+            tableau = tableau[tableau["ville"].isin(villes)]
+        if magasins:
+            tableau = tableau[tableau["magasin"].isin(magasins)]
+    if job in ("ca_categorie", "ca_produit") and categories:
+        tableau = tableau[tableau["categorie"].isin(categories)]
+    if job != "ca_mois":
         tableau = tableau.sort_values("cents", ascending=False)
-    tableau = tableau.rename(columns=colonnes)
-    tableau["CA net"] = tableau["ca"].map(dollars)
-    tableau = tableau.rename(columns={"cents": "Valeur (cents)"})
-    return tableau[list(colonnes.values()) + ["CA net", "Valeur (cents)"]]
+    return tableau
+
+
+def bloc_job(titre, cle, fichier, filtres_appliques, tableau, colonnes, hauteur, largeurs=None):
+    """Un bloc de même structure pour chaque job : titre, clé, fichier, filtres, tableau, total."""
+    with st.container(border=True, height=hauteur):
+        st.subheader(titre)
+        st.caption(f"Clé : `{cle}`")
+        st.caption(f"Fichier : `{fichier}`")
+        appliques = [f for f in filtres_appliques if FILTRES_ACTIFS[f]]
+        ignores = [f for f, actif in FILTRES_ACTIFS.items() if actif and f not in filtres_appliques]
+        st.caption("Filtres appliqués : " + (", ".join(appliques) if appliques else "aucun"))
+        st.caption("Filtres non applicables (effacés de la clé) : " + (", ".join(ignores) if ignores else "aucun"))
+        affichage = tableau[list(colonnes)].rename(columns=colonnes)
+        affichage["CA net"] = tableau["ca"].map(dollars).values
+        affichage["Valeur (cents)"] = tableau["cents"].values
+        config = {"CA net": st.column_config.TextColumn(alignment="right"),
+                  "Valeur (cents)": st.column_config.NumberColumn(format="%d")}
+        for colonne in (largeurs or []):
+            config[colonne] = st.column_config.Column(width="small")
+        st.dataframe(affichage, hide_index=True, width="stretch", column_config=config,
+                     height=(len(affichage) + 1) * HAUTEUR_LIGNE + 3)
+        st.markdown(texte_md(f"**Total : {dollars(tableau['ca'].sum())}** · {len(tableau)} ligne{'s' if len(tableau) > 1 else ''}"))
 
 
 with onglet_jobs:
     st.caption("Sorties des jobs 2 à 5, chaînés sur ca_detail, affichées telles que MapReduce les a écrites "
-               "(fichiers part-*, année complète, sans filtre). Clé et valeur : clé<TAB>montant en cents.")
-    haut_g, haut_d = st.columns(2)
-    with haut_g:
-        st.subheader("Job 2 · ca_mois")
-        st.caption("Clé : mois · 12 lignes · resultats/ca_mois/part-00000")
-        mois = tableau_job("ca_mois", {"mois": "Mois"})
-        mois["Mois"] = mois["Mois"].str[5:7].map(NOMS_MOIS) + " 2025"
-        st.dataframe(mois, hide_index=True, width="stretch")
-    with haut_d:
-        st.subheader("Job 3 · ca_magasin")
-        st.caption("Clé : magasin|ville · 8 lignes · resultats/ca_magasin/part-00000")
-        st.dataframe(tableau_job("ca_magasin", {"magasin": "Magasin", "ville": "Ville"}, tri="ca"),
-                     hide_index=True, width="stretch")
-        st.subheader("Job 4 · ca_categorie")
-        st.caption("Clé : categorie · 4 lignes · resultats/ca_categorie/part-00000")
-        st.dataframe(tableau_job("ca_categorie", {"categorie": "Catégorie"}, tri="ca"),
-                     hide_index=True, width="stretch")
-    st.subheader("Job 5 · ca_produit")
-    st.caption("Clé : id_produit|nom_produit|categorie · 20 lignes · resultats/ca_produit/part-00000 · "
-               "les 5 premières lignes forment le Top 5")
-    produits = tableau_job("ca_produit", {"id_produit": "Produit", "nom_produit": "Nom", "categorie": "Catégorie"},
-                           tri="ca")
-    produits.insert(0, "Rang", range(1, len(produits) + 1))
-    st.dataframe(produits, hide_index=True, width="stretch")
+               "(clé<TAB>montant en cents). Un filtre ne s'applique à un job que si la colonne est encore "
+               "dans sa clé ; l'onglet Analyses, calculé sur ca_detail, applique tous les filtres.")
+    mois = tableau_job("ca_mois")
+    mois["mois"] = mois["mois_affiche"] + " 2025"
+    magasins_job = tableau_job("ca_magasin")
+    categories_job = tableau_job("ca_categorie")
+    produits = tableau_job("ca_produit")
+    produits.insert(0, "rang", range(1, len(produits) + 1))
+
+    rangee1 = hauteur_bloc(max(len(mois), len(magasins_job)))
+    gauche, droite = st.columns(2)
+    with gauche:
+        bloc_job("Job 2 · ca_mois", "mois", "resultats/ca_mois/part-00000", ["Période"],
+                 mois, {"mois": "Mois"}, rangee1)
+    with droite:
+        bloc_job("Job 3 · ca_magasin", "magasin|ville", "resultats/ca_magasin/part-00000", ["Ville", "Magasin"],
+                 magasins_job, {"magasin": "Magasin", "ville": "Ville"}, rangee1)
+
+    rangee2 = hauteur_bloc(max(len(categories_job), len(produits)))
+    gauche, droite = st.columns([2, 3])          # le job 5 a 6 colonnes : on lui donne plus de largeur
+    with gauche:
+        bloc_job("Job 4 · ca_categorie", "categorie", "resultats/ca_categorie/part-00000", ["Catégorie"],
+                 categories_job, {"categorie": "Catégorie"}, rangee2)
+    with droite:
+        bloc_job("Job 5 · ca_produit", "id_produit|nom_produit|categorie", "resultats/ca_produit/part-00000",
+                 ["Catégorie"], produits,
+                 {"rang": "Rang", "id_produit": "Produit", "nom_produit": "Nom", "categorie": "Catégorie"},
+                 rangee2, largeurs=["Rang", "Produit"])
